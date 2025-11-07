@@ -1,8 +1,11 @@
 name: Update daily image
 on:
   schedule:
-    - cron: "0 * * * *"   # runs hourly; we’ll only act at local midnight
+    - cron: "0 * * * *"   # run hourly; we only act at local midnight
   workflow_dispatch:
+
+permissions:
+  contents: write   # <- required to push
 
 jobs:
   update:
@@ -10,35 +13,34 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Set timezone to US Eastern
-        run: sudo timedatectl set-timezone America/New_York
-
+      # Only proceed at midnight US/Eastern without changing system timezone
       - name: Run only at midnight Eastern
         run: |
-          hour=$(date +%H)
-          if [ "$hour" -ne 0 ]; then
-            echo "Not midnight Eastern — exiting."
+          HOUR=$(TZ=America/New_York date +%H)
+          if [ "$HOUR" -ne 0 ]; then
+            echo "Not midnight Eastern ($HOUR:00). Exiting."
             exit 0
           fi
 
-      - name: Copy today’s image
+      - name: Pick today’s image and copy to today.jpg
         run: |
-          dow=$(date +%u)  # 1=Mon ... 7=Sun
-          case "$dow" in
-            1) src="notion/images/monday.jpg";;
-            2) src="notion/images/tuesday.jpg";;
-            3) src="notion/images/wednesday.jpg";;
-            4) src="notion/images/thursday.jpg";;
-            5) src="notion/images/friday.jpg";;
-            6) src="notion/images/saturday.jpg";;
-            7) src="notion/images/sunday.jpg";;
+          DOW=$(TZ=America/New_York date +%u)  # 1=Mon ... 7=Sun
+          case "$DOW" in
+            1) SRC="notion/images/monday.jpg";;
+            2) SRC="notion/images/tuesday.jpg";;
+            3) SRC="notion/images/wednesday.jpg";;
+            4) SRC="notion/images/thursday.jpg";;
+            5) SRC="notion/images/friday.jpg";;
+            6) SRC="notion/images/saturday.jpg";;
+            7) SRC="notion/images/sunday.jpg";;
           esac
-          cp "$src" "notion/images/today.jpg"
+          ls -l "$SRC" || (echo "Source image not found: $SRC" && exit 1)
+          cp "$SRC" "notion/images/today.jpg"
 
       - name: Commit changes
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add notion/images/today.jpg
-          git commit -m "Daily image update" || echo "No changes"
+          git commit -m "Daily image update" || { echo "No changes to commit"; exit 0; }
           git push
