@@ -3,26 +3,29 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Daily Image</title>
+  <title>Le Petit Prince – Daily Image</title>
+
   <style>
+    /* Make both html and body transparent */
+    html, body {
+      height: 100%;
+      margin: 0;
+      background: transparent !important;
+    }
+
     body {
       display: flex;
       justify-content: center;
       align-items: center;
-      height: 100vh;
-      margin: 0;
-      background: transparent!important;  /* ← makes background see-through */
       font-family: system-ui, sans-serif;
     }
+
     img {
       max-width: 90%;
       height: auto;
       border-radius: 12px;
       box-shadow: 0 4px 16px rgba(0,0,0,0.2);
     }
-    html {
-  background: transparent !important;
-}
   </style>
 </head>
 <body>
@@ -30,7 +33,7 @@
   <img id="dailyImage" alt="Today's image">
 
   <script>
-    // Map 0–6 (Sunday–Saturday) to your filenames
+    // 0 = Sunday, 6 = Saturday
     const images = [
       "images/sunday.jpg",
       "images/monday.jpg",
@@ -41,10 +44,8 @@
       "images/saturday.jpg"
     ];
 
-    // Get today’s index and show that image
-    const today = new Date().getDay();  // 0 = Sunday
-    const imageElement = document.getElementById("dailyImage");
-    imageElement.src = images[today];
+    const today = new Date().getDay();
+    document.getElementById("dailyImage").src = images[today];
   </script>
 
 </body>
