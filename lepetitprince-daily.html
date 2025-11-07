@@ -6,29 +6,13 @@
   <title>Le Petit Prince – Daily Image</title>
 
 <style>
-  html, body {
-    margin: 0;
-    padding: 0;
-    background: transparent !important;
-    height: 100%;
-    width: 100%;
-  }
-
-  body {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-family: system-ui, sans-serif;
-  }
-
-  img {
-    height: 100vh;      /* full viewport height */
-    width: auto;        /* keeps proportions */
-    border-radius: 12px;
-    box-shadow: 0 4px 16px rgba(0,0,0,0.2);
-    max-height: 100%;   /* ensures it doesn’t overflow inside Notion */
-  }
+  html, body { margin:0; height:100%; background:transparent; overflow:hidden; }
+  .wrap { height:100%; width:100%; display:grid; place-items:center; }
+  img { height:100%; width:100%; object-fit:cover; border-radius:12px; }
 </style>
+<div class="wrap">
+  <img id="dailyImage" alt="">
+</div>
 </head>
 <body>
 
