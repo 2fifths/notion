@@ -5,13 +5,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Le Petit Prince – Daily Image</title>
 
-  <style>
+<style>
   html, body {
     margin: 0;
     padding: 0;
     background: transparent !important;
-    width: 100%;
     height: 100%;
+    width: 100%;
   }
 
   body {
@@ -22,11 +22,11 @@
   }
 
   img {
-    width: 100%;
-    height: auto;
-    max-width: 800px;   /* optional: prevents it from getting too huge on big screens */
+    height: 100vh;      /* full viewport height */
+    width: auto;        /* keeps proportions */
     border-radius: 12px;
     box-shadow: 0 4px 16px rgba(0,0,0,0.2);
+    max-height: 100%;   /* ensures it doesn’t overflow inside Notion */
   }
 </style>
 </head>
