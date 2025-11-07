@@ -6,27 +6,29 @@
   <title>Le Petit Prince – Daily Image</title>
 
   <style>
-    /* Make both html and body transparent */
-    html, body {
-      height: 100%;
-      margin: 0;
-      background: transparent !important;
-    }
+  html, body {
+    margin: 0;
+    padding: 0;
+    background: transparent !important;
+    width: 100%;
+    height: 100%;
+  }
 
-    body {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      font-family: system-ui, sans-serif;
-    }
+  body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: system-ui, sans-serif;
+  }
 
-    img {
-      max-width: 90%;
-      height: auto;
-      border-radius: 12px;
-      box-shadow: 0 4px 16px rgba(0,0,0,0.2);
-    }
-  </style>
+  img {
+    width: 100%;
+    height: auto;
+    max-width: 800px;   /* optional: prevents it from getting too huge on big screens */
+    border-radius: 12px;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.2);
+  }
+</style>
 </head>
 <body>
 
